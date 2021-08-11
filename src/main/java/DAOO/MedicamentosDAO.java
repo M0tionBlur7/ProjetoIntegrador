@@ -33,7 +33,8 @@ public class MedicamentosDAO {
 
             while (rs.next()) {
                 Medicamento med = new Medicamento();
-                med.setNomeMed(rs.getString("cod_med"));
+                med.setId(rs.getInt("cod_med"));
+                med.setNomeMed(rs.getString("nome_med"));
                 med.setDescricao(rs.getString("descricao"));
                 med.setNomeFor(rs.getString("nome_fornecedor"));
                 med.setValorAgain(rs.getDouble("valor"));
