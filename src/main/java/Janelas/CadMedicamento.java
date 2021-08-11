@@ -5,17 +5,35 @@
  */
 package Janelas;
 
+import DAOO.MedicamentosDAO;
+import Model.MedTableModel;
+import Objetos.Medicamento;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Samuel
  */
 public class CadMedicamento extends javax.swing.JFrame {
+    
+    MedTableModel mtm = new MedTableModel();
 
     /**
      * Creates new form CadMedicamento
      */
     public CadMedicamento() {
         initComponents();
+        
+        jTableMed.setModel(mtm);
+        mtm.recarregaTabela();
+    }
+    
+    public void limpaCampo() {
+        jTNome.setText("");
+        jTDescricao.setText("");
+        jTNomeFor.setText("");
+        jTValor.setText("");
+        jTQtde.setText("");
     }
 
     /**
@@ -43,6 +61,10 @@ public class CadMedicamento extends javax.swing.JFrame {
         jTValor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTQtde = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableMed = new javax.swing.JTable();
+        jBRemover = new javax.swing.JButton();
+        jBAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +82,11 @@ public class CadMedicamento extends javax.swing.JFrame {
         jLabel5.setText("Nome do Fornecedor:");
 
         jBLimpar.setText("LIMPAR TUDO");
+        jBLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBLimparActionPerformed(evt);
+            }
+        });
 
         jBCancelar.setText("CANCELAR");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +115,33 @@ public class CadMedicamento extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Quantidade:");
 
+        jTableMed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableMed);
+
+        jBRemover.setText("REMOVER");
+        jBRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverActionPerformed(evt);
+            }
+        });
+
+        jBAlterar.setText("ALTERAR");
+        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,7 +154,10 @@ public class CadMedicamento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBVoltar)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBVoltar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
@@ -113,17 +170,22 @@ public class CadMedicamento extends javax.swing.JFrame {
                                     .addComponent(jTDescricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                                     .addComponent(jTNome, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTNomeFor)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jTQtde, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                             .addComponent(jTValor))
                                         .addGap(201, 201, 201)
-                                        .addComponent(jBLimpar)))))
-                        .addGap(0, 72, Short.MAX_VALUE)))
+                                        .addComponent(jBLimpar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 72, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,12 +214,16 @@ public class CadMedicamento extends javax.swing.JFrame {
                     .addComponent(jBLimpar)
                     .addComponent(jLabel4)
                     .addComponent(jTQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(100, 100, 100)
+                .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBCancelar)
                     .addComponent(jBCadastrar)
-                    .addComponent(jBVoltar))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(jBCancelar)
+                    .addComponent(jBVoltar)
+                    .addComponent(jBRemover)
+                    .addComponent(jBAlterar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,9 +258,68 @@ public class CadMedicamento extends javax.swing.JFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         // TODO add your handling code here:
+        MedicamentosDAO dao = new MedicamentosDAO();
+        Medicamento m = new Medicamento();
+        
+        try {
+            m.setNomeMed(jTNome.getText());
+            m.setDescricao(jTDescricao.getText());
+            m.setNomeFor(jTNomeFor.getText());
+            m.setValorAgain(Double.parseDouble(jTValor.getText()));
+            m.setQtdeAgain(Integer.parseInt(jTQtde.getText()));
+            dao.create(m);
+            mtm.recarregaTabela();
+            mtm.addRow(m);
+            limpaCampo();
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Preencha corretamente os campos! ");
+        }
+        
+        
+        
         
         
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverActionPerformed
+        // TODO add your handling code here:
+        
+        if (jTableMed.getSelectedRow() != -1) {
+            MedicamentosDAO dao = new MedicamentosDAO();
+            Medicamento m = mtm.pegaDadosLinha(jTableMed.getSelectedRow());
+            dao.delete(m);
+            mtm.removeRow(jTableMed.getSelectedRow());
+            limpaCampo();
+            
+           
+            
+        }
+      
+    }//GEN-LAST:event_jBRemoverActionPerformed
+
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        // TODO add your handling code here:
+        
+        if(jTableMed.getSelectedRow() != -1) {
+            mtm.setValueAt(jTNome.getText(), jTableMed.getSelectedRow(), 0);
+            mtm.setValueAt(jTDescricao.getText(), jTableMed.getSelectedRow(), 1);
+            mtm.setValueAt(jTNomeFor.getText(), jTableMed.getSelectedRow(), 2);
+            mtm.setValueAt(jTValor.getText(), jTableMed.getSelectedRow(), 3);
+            mtm.setValueAt(jTQtde.getText(), jTableMed.getSelectedRow(), 4);
+            
+            
+        }
+        
+        
+    }//GEN-LAST:event_jBAlterarActionPerformed
+
+    private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
+        // TODO add your handling code here:
+        
+        limpaCampo();
+    }//GEN-LAST:event_jBLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,9 +357,11 @@ public class CadMedicamento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBLimpar;
+    private javax.swing.JButton jBRemover;
     private javax.swing.JButton jBVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -243,10 +370,12 @@ public class CadMedicamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTDescricao;
     private javax.swing.JTextField jTNome;
     private javax.swing.JTextField jTNomeFor;
     private javax.swing.JTextField jTQtde;
     private javax.swing.JTextField jTValor;
+    private javax.swing.JTable jTableMed;
     // End of variables declaration//GEN-END:variables
 }

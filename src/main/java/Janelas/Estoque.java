@@ -6,6 +6,7 @@
 package Janelas;
 
 
+import Model.MedTableModel;
 import Objetos.Medicamento;
 
 /**
@@ -17,6 +18,8 @@ public class Estoque extends javax.swing.JFrame {
     Medicamento med = new Medicamento();
     CadMedicamento cadMed = new CadMedicamento();
     
+    MedTableModel mtm = new MedTableModel();
+    
 
     /**
      * Creates new form Estoque
@@ -24,7 +27,7 @@ public class Estoque extends javax.swing.JFrame {
     public Estoque() {
         initComponents();
         
-        
+        jTableMed0.setModel(mtm);
     }
 
     /**
@@ -37,12 +40,12 @@ public class Estoque extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMed = new javax.swing.JTable();
+        jTableMed0 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTableMed.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMed0.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,7 +56,7 @@ public class Estoque extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableMed);
+        jScrollPane1.setViewportView(jTableMed0);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -121,6 +124,6 @@ public class Estoque extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableMed;
+    private javax.swing.JTable jTableMed0;
     // End of variables declaration//GEN-END:variables
 }
