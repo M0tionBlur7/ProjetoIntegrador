@@ -5,6 +5,8 @@
  */
 package Janelas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Samuel
@@ -33,8 +35,7 @@ public class Login extends javax.swing.JFrame {
         jTUser = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPSenha = new javax.swing.JPasswordField();
-        jBAlterar = new javax.swing.JButton();
-        jBLimpar = new javax.swing.JButton();
+        jBCancelar = new javax.swing.JButton();
         jBLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,21 +56,18 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("SENHA: ");
 
-        jPSenha.setText("jPasswordField1");
         jPSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPSenhaActionPerformed(evt);
             }
         });
 
-        jBAlterar.setText("ALTERAR");
-        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
+        jBCancelar.setText("EXIT");
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAlterarActionPerformed(evt);
+                jBCancelarActionPerformed(evt);
             }
         });
-
-        jBLimpar.setText("LIMPAR");
 
         jBLogin.setText("ENTRAR");
         jBLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -88,9 +86,9 @@ public class Login extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(207, 207, 207)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
@@ -99,10 +97,9 @@ public class Login extends javax.swing.JFrame {
                                     .addComponent(jTUser, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jBAlterar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBLimpar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(261, 261, 261)
+                                .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jBLogin)))
                         .addGap(0, 164, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -122,9 +119,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jPSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBAlterar)
-                    .addComponent(jBLimpar)
-                    .addComponent(jBLogin))
+                    .addComponent(jBLogin)
+                    .addComponent(jBCancelar))
                 .addContainerGap(89, Short.MAX_VALUE))
         );
 
@@ -150,14 +146,28 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPSenhaActionPerformed
 
-    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBAlterarActionPerformed
-
     private void jBLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLoginActionPerformed
         // TODO add your handling code here:
         
+        if(jTUser.getText().equals("admin")&&jPSenha.getText().equals("123456")) {
+            
+            Principal p = new Principal();
+            p.setVisible(true);
+            this.dispose();
+            
+            JOptionPane.showMessageDialog(null, "Bem-Vindo!");
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Informações incorretas!");
+        }
+        
     }//GEN-LAST:event_jBLoginActionPerformed
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+        // TODO add your handling code here:
+        
+       System.exit(0);
+    }//GEN-LAST:event_jBCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,8 +205,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAlterar;
-    private javax.swing.JButton jBLimpar;
+    private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

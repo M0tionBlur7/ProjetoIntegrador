@@ -83,6 +83,7 @@ public class MedicamentosDAO {
             stmt.setString(3, med.getNomeFor());
             stmt.setDouble(4, med.getValorAgain());
             stmt.setInt(5, med.getQtdeAgain());
+            stmt.setInt(6, med.getId());
 
             
             stmt.execute();
@@ -116,3 +117,18 @@ public class MedicamentosDAO {
     }
     
 }
+
+//            c.setNomeDrogaria(jTNome.getText());
+//            c.setCnpj(Integer.parseInt(jTCnpj.getText()));
+//            c.setRua(jTRua.getText());
+//            c.setComplemento(jTComplemento.getText());
+//            c.setNumero(Integer.parseInt(jTNumero.getText()));
+//            c.setBairro(jTBairro.getText());
+//            c.setCidade(jTCidade.getText());
+//            c.setCep(Integer.parseInt(jTCep.getText()));
+//            c.setEstado(jTEstado.getText());
+//            
+//            dao.create(c);
+//            cli.recarregaTabela();
+//            cli.addRow(c);
+//            limpaCampo();

@@ -26,6 +26,7 @@ public class CadMedicamento extends javax.swing.JFrame {
         
         jTableMed.setModel(mtm);
         mtm.recarregaTabela();
+        totalCarrinho();
     }
     
     public void limpaCampo() {
@@ -65,6 +66,8 @@ public class CadMedicamento extends javax.swing.JFrame {
         jTableMed = new javax.swing.JTable();
         jBRemover = new javax.swing.JButton();
         jBAlterar = new javax.swing.JButton();
+        jLTotal = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +129,11 @@ public class CadMedicamento extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableMed.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMedMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableMed);
 
         jBRemover.setText("REMOVER");
@@ -141,6 +149,10 @@ public class CadMedicamento extends javax.swing.JFrame {
                 jBAlterarActionPerformed(evt);
             }
         });
+
+        jLTotal.setText("jLabel6");
+
+        jButton1.setText("ADICIONAR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,14 +179,16 @@ public class CadMedicamento extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTDescricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                    .addComponent(jTDescricao, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTNome, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTNomeFor)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jTQtde, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                             .addComponent(jTValor))
-                                        .addGap(201, 201, 201)
+                                        .addGap(72, 72, 72)
+                                        .addComponent(jLTotal)
+                                        .addGap(88, 88, 88)
                                         .addComponent(jBLimpar))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +196,9 @@ public class CadMedicamento extends javax.swing.JFrame {
                                         .addComponent(jBRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 72, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(0, 141, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -213,14 +229,16 @@ public class CadMedicamento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBLimpar)
                     .addComponent(jLabel4)
-                    .addComponent(jTQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLTotal))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCadastrar)
                     .addComponent(jBCancelar)
                     .addComponent(jBVoltar)
                     .addComponent(jBRemover)
-                    .addComponent(jBAlterar))
+                    .addComponent(jBAlterar)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -230,7 +248,7 @@ public class CadMedicamento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,6 +327,12 @@ public class CadMedicamento extends javax.swing.JFrame {
             mtm.setValueAt(jTValor.getText(), jTableMed.getSelectedRow(), 3);
             mtm.setValueAt(jTQtde.getText(), jTableMed.getSelectedRow(), 4);
             
+            Medicamento m = mtm.pegaDadosLinha(jTableMed.getSelectedRow());
+            MedicamentosDAO dao = new MedicamentosDAO();
+            dao.update(m);
+            
+            limpaCampo();
+            mtm.recarregaTabela();
             
         }
         
@@ -321,6 +345,25 @@ public class CadMedicamento extends javax.swing.JFrame {
         limpaCampo();
     }//GEN-LAST:event_jBLimparActionPerformed
 
+    private void jTableMedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMedMouseClicked
+        // TODO add your handling code here:
+        
+        Medicamento m = mtm.pegaDadosLinha(jTableMed.getSelectedRow());
+        jTNome.setText(m.getNomeMed());
+        jTDescricao.setText(m.getDescricao());
+        jTNomeFor.setText(m.getNomeFor());
+        jTValor.setText(String.valueOf(m.getValorAgain()));
+        jTQtde.setText(String.valueOf(m.getQtdeAgain()));
+    }//GEN-LAST:event_jTableMedMouseClicked
+
+    
+    private void totalCarrinho(){
+        double total = 0.0;
+        for (int i = 0; i <= jTableMed.getRowCount() -1; i++) {
+            total += Double.parseDouble(jTableMed.getValueAt(i, 3).toString());
+        }
+        jLTotal.setText(String.valueOf(total));
+    }
     /**
      * @param args the command line arguments
      */
@@ -363,6 +406,8 @@ public class CadMedicamento extends javax.swing.JFrame {
     private javax.swing.JButton jBLimpar;
     private javax.swing.JButton jBRemover;
     private javax.swing.JButton jBVoltar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
